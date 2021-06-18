@@ -105,7 +105,7 @@ class LoginScreenWidget extends StatelessWidget {
             ),
             Container(
               height: 60,
-              width: SizeConfig.screenWidth * 0.80,
+              width: SizeConfig.screenWidth,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Color.fromRGBO(53, 126, 189, 1),

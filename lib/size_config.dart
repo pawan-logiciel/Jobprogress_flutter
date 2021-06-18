@@ -23,7 +23,9 @@ class SizeConfig {
       isMobilePortrait = false;
     }
     print(screenWidth);
-    if(screenWidth >= 768) isIpad = true;
+    print(screenHeight);
+
+    if((orientation == Orientation.portrait && screenWidth >= 768) || (orientation != Orientation.portrait && screenHeight >= 768)) isIpad = true;
 
     print("isIpad $isIpad");
     print("isPortrait $isPortrait");
