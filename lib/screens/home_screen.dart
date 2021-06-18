@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+import '../size_config.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -11,9 +14,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(left: 30, right:30, top: 40, bottom: 10),
-        child: ListView(
+      body: SafeArea(
+        child: Container(
+          child:  SizeConfig.isIpad ? Center(
+            child: SingleChildScrollView(
+              child: LoginScreenWidget(),
+            ),
+          ) : SingleChildScrollView(
+            child: LoginScreenWidget(),
+          )
+        ),
+      ),
+    );
+  }
+}
+
+class LoginScreenWidget extends StatelessWidget {
+  
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      width: 600,
+      padding: EdgeInsets.only(left: 30, right:30, top: SizeConfig.isIpad ? 0 : 40, bottom: 10),
+      child: (
+        Column(
           children: [
             Column(
               children: [
@@ -21,11 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Welcome to JobProgress', style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w400
-                ),)
+                Text('Welcome to JobProgress', style: theme.textTheme.headline1)
               ],
             ),
             SizedBox(
@@ -45,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       labelText: 'Email',
                       labelStyle: TextStyle(
-                        color: Color.fromRGBO(84, 98, 125, 1)
+                        color: Color.fromRGBO(84, 98, 125, 1),
                       ),
                       hintText: 'Johndoe@gmail.com'
                     ),
@@ -64,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       labelText: 'Password',
                       labelStyle: TextStyle(
-                        color: Color.fromRGBO(84, 98, 125, 1)
+                        color: Color.fromRGBO(84, 98, 125, 1),
                       ),
                       hintText: '*******',
                     ),
@@ -77,17 +99,13 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text('Forgot password?', style: TextStyle(
-                      color: Color.fromRGBO(53, 126, 189, 1),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    )
-                  )
+                  Text('Forgot password?', style: theme.textTheme.headline6)
                 ],
               ),
             ),
             Container(
               height: 60,
+              width: SizeConfig.screenWidth * 0.80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
                 color: Color.fromRGBO(53, 126, 189, 1),
@@ -96,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   // To do
                 },
-                child: Text("LOGIN", style: TextStyle(color: Colors.white)),
+                child: Text("LOGIN", style: theme.textTheme.bodyText1.copyWith(color: Colors.white)),
               ),
             ),
             Padding(
@@ -105,21 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Don\'t have an account? '),
-                  Text('SIGNUP', style: TextStyle(
-                      color: Color.fromRGBO(53, 126, 189, 1),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                  ))
+                  Text('SIGNUP', style: theme.textTheme.headline6)
                 ],
               ),
             ),
             Container(
               alignment: Alignment.center,
-              child: Text('TRY QUICK DEMO', style: TextStyle(
-                      color: Color.fromRGBO(53, 126, 189, 1),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-              )),
+              child: Text('TRY QUICK DEMO', style: theme.textTheme.headline6),
             )
           ],
         )

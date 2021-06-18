@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:jp_ui/screens/home_screen.dart';
+import 'package:jp_ui/size_config.dart';
 
-import 'screens/home_screen.dart';
+import 'styling.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My app',
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return OrientationBuilder(
+          builder: (context, orientation) {
+            SizeConfig().init(constraints, orientation);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Learning Platform Application',
+              theme: AppTheme.lightTheme,
+              home: HomeScreen(),
+            );
+          },
+        );
+      },
     );
   }
 }
