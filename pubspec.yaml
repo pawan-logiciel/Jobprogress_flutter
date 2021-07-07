@@ -24,6 +24,7 @@ dependencies:
   loadmore: ^2.0.1
   flutter:
     sdk: flutter
+  shimmer:
 
 
   # The following adds the Cupertino Icons font to your application.

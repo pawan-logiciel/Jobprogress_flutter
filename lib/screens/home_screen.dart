@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:loadmore/loadmore.dart';
+import 'package:shimmer/shimmer.dart';
 
+import './shimmer_layout.dart';
+import './drawer.dart';
 import '../size_config.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  bool isLoaded = true;
   int get count => entries.length;
   // This widget is the root of your application.
   List<int> entries = <int>[1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
@@ -38,7 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: BackButton(
           color: Colors.white,
-          onPressed: () => {},
+          onPressed: () => {
+            print(''),
+            if (MediaQuery.of(context).orientation == Orientation.landscape)
+              {print('landscape')}
+            else
+              {print('portrait!')}
+          },
         ),
         actions: <Widget>[
           Padding(
@@ -58,106 +69,108 @@ class _HomeScreenState extends State<HomeScreen> {
       endDrawer: NavDrawer(),
       body: SafeArea(
         child: Container(
-          child: Container(
-            child: (Column(
-              children: [
-                Container(
-                  height: 30.0,
-                  color: Colors.grey[300],
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Spacer(),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.red[900],
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          padding: EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            top: 2,
-                            bottom: 2,
-                          ),
-                          margin: EdgeInsets.all(5.0),
-                          child: Text(
-                            "DATE FILTER",
-                            style: TextStyle(fontSize: 12, color: Colors.white),
-                          )),
-                    ],
-                  ),
+          child: (Column(
+            children: [
+              Container(
+                height: 30.0,
+                color: Colors.grey[300],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Spacer(),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red[900],
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        padding: EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          top: 2,
+                          bottom: 2,
+                        ),
+                        margin: EdgeInsets.all(5.0),
+                        child: Text(
+                          "DATE FILTER",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        )),
+                  ],
                 ),
-                Expanded(
-                  child: Container(
-                    child: RefreshIndicator(
-                      onRefresh: _refresh,
-                      child: LoadMore(
-                        isFinish: count >= 60,
-                        onLoadMore: _loadMore,
-                        whenEmptyLoad: false,
-                        delegate: DefaultLoadMoreDelegate(),
-                        textBuilder: DefaultLoadMoreTextBuilder.english,
-                        child: entries.length > 0
-                            ? ListView.separated(
-                                itemCount: entries.length,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        const Divider(height: 2),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    padding: EdgeInsets.all(10.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          // mainAxisAlignment: MainAxisAlignment.center,
-                                          // crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Flexible(
-                                                child: Text(
-                                              "Commercial-Type / APPLIANCES  /Job # 2020-225",
-                                              overflow: TextOverflow.ellipsis,
-                                              softWrap: true,
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            )),
-                                            GestureDetector(
-                                              onTap: () {},
-                                              child: Icon(
-                                                Icons.content_copy,
-                                                color: Colors.green[400],
+              ),
+              Expanded(
+                child: Container(
+                  child: RefreshIndicator(
+                    onRefresh: _refresh,
+                    child: LoadMore(
+                      isFinish: count >= 60,
+                      onLoadMore: _loadMore,
+                      whenEmptyLoad: false,
+                      delegate: DefaultLoadMoreDelegate(),
+                      textBuilder: DefaultLoadMoreTextBuilder.english,
+                      child: !isLoaded
+                          ? ShimmerList()
+                          : entries.length > 0
+                              ? ListView.separated(
+                                  itemCount: entries.length,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          const Divider(height: 2),
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            // mainAxisAlignment: MainAxisAlignment.center,
+                                            // crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Flexible(
+                                                  child: Text(
+                                                "Commercial-Type / APPLIANCES  /Job # 2020-225",
+                                                overflow: TextOverflow.ellipsis,
+                                                softWrap: true,
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )),
+                                              GestureDetector(
+                                                onTap: () {},
+                                                child: Icon(
+                                                  Icons.content_copy,
+                                                  color: Colors.green[400],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                              "Recurring - Every 2 Weeks on Wednesday, Thursday, Friday, 730 times"),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text("Qwe"),
-                                        ),
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                              "Friday, 07/09/2021 11:30 am"),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                })
-                            : Center(child: Text('No items')),
-                      ),
+                                            ],
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                "Recurring - Every 2 Weeks on Wednesday, Thursday, Friday, 730 times"),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text("Qwe"),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                "Friday, 07/09/2021 11:30 am"),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  })
+                              : Center(child: Text('No items')),
                     ),
                   ),
-                )
-              ],
-            )),
-          ),
+                ),
+              )
+            ],
+          )),
         ),
       ),
     );
@@ -172,59 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _refresh() async {
-    await Future.delayed(Duration(seconds: 0, milliseconds: 5000));
     entries.clear();
+    setState(() => isLoaded = false);
+    await Future.delayed(Duration(seconds: 0, milliseconds: 5000));
+    setState(() => isLoaded = true);
     load();
-  }
-}
-
-class NavDrawer extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          DrawerHeader(
-            child: Text(
-              'Side menu',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              // image: DecorationImage(
-              //     fit: BoxFit.fill,
-              //     image: AssetImage('assets/images/cover.jpg')),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.input),
-            title: Text('Welcome'),
-            onTap: () => {},
-          ),
-          ListTile(
-            leading: Icon(Icons.verified_user),
-            title: Text('Profile'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.border_color),
-            title: Text('Feedback'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Logout'),
-            onTap: () => {Navigator.of(context).pop()},
-          ),
-        ],
-      ),
-    );
   }
 }
 
