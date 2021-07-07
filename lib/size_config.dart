@@ -9,6 +9,7 @@ class SizeConfig {
   static bool isIpad = false;
 
   void init(BoxConstraints constraints, Orientation orientation) {
+    print(orientation);
     if (orientation == Orientation.portrait) {
       screenWidth = constraints.maxWidth;
       screenHeight = constraints.maxHeight;

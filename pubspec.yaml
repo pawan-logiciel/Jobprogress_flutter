@@ -21,8 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  loadmore: ^2.0.1
   flutter:
     sdk: flutter
+  shimmer:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -47,6 +49,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto/Roboto-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

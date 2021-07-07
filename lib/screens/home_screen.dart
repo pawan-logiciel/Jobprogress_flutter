@@ -1,139 +1,66 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-import '../size_config.dart';
-
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
-
+class HomeView extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreen createState() => _HomeScreen();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreen extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          child:  SizeConfig.isIpad ? Center(
-            child: SingleChildScrollView(
-              child: LoginScreenWidget(),
-            ),
-          ) : SingleChildScrollView(
-            child: LoginScreenWidget(),
-          )
-        ),
-      ),
-    );
-  }
-}
-
-class LoginScreenWidget extends StatelessWidget {
-  
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-      width: 600,
-      padding: EdgeInsets.only(left: 30, right:30, top: SizeConfig.isIpad ? 0 : 40, bottom: 10),
-      child: (
-        Column(
-          children: [
-            Column(
-              children: [
-                Image.asset('images/jp-logo.png', width: 90),
-                SizedBox(
-                  height: 20,
-                ),
-                Text('Welcome to JobProgress', style: theme.textTheme.headline1)
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(238, 238, 238, 1), width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(238, 238, 238, 1), width: 1.0),
-                      ),
-                      labelText: 'Email',
-                      labelStyle: TextStyle(
-                        color: Color.fromRGBO(84, 98, 125, 1),
-                      ),
-                      hintText: 'Johndoe@gmail.com'
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(238, 238, 238, 1), width: 1.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Color.fromRGBO(238, 238, 238, 1), width: 1.0),
-                      ),
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        color: Color.fromRGBO(84, 98, 125, 1),
-                      ),
-                      hintText: '*******',
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text('Forgot password?', style: theme.textTheme.headline6)
-                ],
-              ),
-            ),
-            Container(
-              height: 60,
-              width: SizeConfig.screenWidth,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Color.fromRGBO(53, 126, 189, 1),
-              ),
-              child: TextButton(
-                onPressed: () {
-                  // To do
-                },
-                child: Text("LOGIN", style: theme.textTheme.bodyText1.copyWith(color: Colors.white)),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40, bottom: 20),
-              child: Row(
+        child: SingleChildScrollView(
+          child: Center(
+            child:  Container(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Don\'t have an account? '),
-                  Text('SIGNUP', style: theme.textTheme.headline6)
+                children: <Widget>[
+                  // new Image.network('https://cdn.jobprogress.com/resources%2Flogiciel_solutions_-_test_1440047554%2Fjobs%2F2104-2163949-01%2Ffolder+6%2F1617874837606ecf95bcd05_cdv_photo_003_pv768.jpg', headers: headersMap),
+                  SizedBox(height: 10),
+                  Material(
+                    color: Colors.red,
+                    child: MaterialButton(
+                      onPressed: (){
+                        print('Button Preessed');
+                        Navigator.pushNamed(context, 'login');
+                      },
+                      minWidth: 200.0,
+                      height: 42.0,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Material(
+                    color: Colors.red,
+                    child: MaterialButton(
+                      onPressed: (){
+                        print('Button Preessed');
+                        Navigator.pushNamed(context, 'task_listing');
+                      },
+                      minWidth: 200.0,
+                      height: 42.0,
+                      child: Text(
+                        'Task listing',
+                        style: TextStyle(
+                            color: Colors.white
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: Text('TRY QUICK DEMO', style: theme.textTheme.headline6),
             )
-          ],
-        )
-      ),
+        ),
+        )),
     );
   }
 }

@@ -1,8 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:jp_ui/screens/home_screen.dart';
+import 'package:jp_ui/screens/login_screen.dart';
+import 'package:jp_ui/screens/task_listing.dart';
 import 'package:jp_ui/size_config.dart';
 
 import 'styling.dart';
+
+Route<dynamic> generateRoute(RouteSettings settings) {
+  switch (settings.name) {
+    case '/':
+      return MaterialPageRoute(builder: (context) => HomeView());
+    case 'login':
+      return MaterialPageRoute(builder: (context) => LoginScreen());
+    case 'task_listing':
+      return MaterialPageRoute(builder: (context) => TaskScreen());
+  }
+}
 
 void main() => runApp(MyApp());
 
@@ -16,9 +29,10 @@ class MyApp extends StatelessWidget {
             SizeConfig().init(constraints, orientation);
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Learning Platform Application',
+              title: 'JobProgress',
+              onGenerateRoute: generateRoute,
               theme: AppTheme.lightTheme,
-              home: HomeScreen(),
+              initialRoute: '/'
             );
           },
         );

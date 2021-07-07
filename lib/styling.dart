@@ -13,6 +13,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
     textTheme: lightTextTheme,
+    fontFamily: 'Roboto'
   );
 
   static final ThemeData darkTheme = ThemeData(
